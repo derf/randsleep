@@ -7,8 +7,8 @@ int main (int argc, char **argv) {
 	long maxsleep;
 	struct timespec ntime;
 
-	if (argc < 2) {
-		fputs("Usage: randsleep <max> <cmd>", stdout);
+	if (argc <= 2) {
+		fputs("Usage: randsleep <max> <cmd>\n", stdout);
 		return 1;
 	}
 
