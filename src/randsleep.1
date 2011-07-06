@@ -33,6 +33,23 @@ seconds.
 It is intended for use in cronjobs and similar.
 .
 .
+.Sh RATIONALE
+.
+.Qq sleep $(( RANDOM % 120 )); do_stuff
+and similar constructs are frequently used in crontab entries to decrease load
+spikes when several entries are executed at the same time.
+.
+.Pp
+.
+However, in certain shells
+.Pq such as Cm dash
+.Ev $RANDOM
+may not be available.
+This leads to workarounds involving, for
+example, /dev/urandom and cksum.  Since repeating the same workarounds over
+and over seems somewhat pointless, this tool was created.
+.
+.
 .Sh AUTHOR
 .
 Copyright (C) 2011 Daniel Friesel
