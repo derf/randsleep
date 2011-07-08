@@ -62,23 +62,7 @@ It is an extremely simple C program with no additional dependencies, so using
 it should not be a problem.
 .
 .
-.Sh EXAMPLES
-.
-.
-.Ss CRONTAB ONE-LINER
-.
-.Dl */10 * * * * root sleep $(( RANDOM % 120 )); do_stuff with arguments
-.
-.Pp
-.
-With
-.Nm ,
-this would look like:
-.
-.Dl */10 * * * * root randsleep 120 do_stuff with arguments
-.
-.
-.Ss CRONJOB SCRIPT
+.Sh EXAMPLE
 .
 .Dl #!/bin/sh
 .Dl if [\& -z \&"$RANDOM\&" ]; then
@@ -95,6 +79,13 @@ With
 .Dl #!/bin/sh
 .Dl randsleep 1800
 .Dl # actually do something
+.
+.Pp
+.
+Or
+.Pq as crontab entry :
+.
+.Dl 10 * * * * root \& \& randsleep 1800 /path/to/script with arguments
 .
 .
 .Sh AUTHOR
