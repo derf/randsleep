@@ -26,7 +26,7 @@ version 0.0
 .Sh DESCRIPTION
 .
 .Nm
-executes
+execs into
 .Ar command
 after sleeping for up to
 .Ar time
@@ -44,19 +44,57 @@ will simply return after sleeping.
 .
 .Sh RATIONALE
 .
-.Qq sleep $(( RANDOM % 120 )); do_stuff
-and similar constructs are frequently used in crontab entries to decrease load
-spikes when several entries are executed at the same time.
+When executing commands via cron, you can only select the point at which
+they're run in minute granularity. Also, you rarely know how many other
+commands may be started at the same point.
+To avoid load spikes by too many cronjobs running at the same time, it has
+become a rather widespread practice to sleep for a random amount of time
+.Pq usually something between 0 and 30 minutes at most
+before actually doing anything.
 .
 .Pp
 .
-However, in certain shells
-.Pq such as Cm dash
-.Ev $RANDOM
-may not be available.
-This leads to workarounds involving, for
-example, /dev/urandom and cksum.  Since repeating the same workarounds over
-and over seems somewhat pointless, this tool was created.
+Since the snippets responsible for this may, especially if the shell does not
+support
+.Ev $RANDOM ,
+become quite long, I decided to write this utility.
+It is an extremely simple C program with no additional dependencies, so using
+it should not be a problem.
+.
+.
+.Sh EXAMPLES
+.
+.
+.Ss CRONTAB ONE-LINER
+.
+.Dl */10 * * * * root sleep $(( RANDOM % 120 )); do_stuff with arguments
+.
+.Pp
+.
+With
+.Nm ,
+this would look like:
+.
+.Dl */10 * * * * root randsleep 120 do_stuff with arguments
+.
+.
+.Ss CRONJOB SCRIPT
+.
+.Dl #!/bin/sh
+.Dl if [\& -z \&"$RANDOM\&" ]; then
+.Dl   RANDOM=$(dd if=/dev/urandom count=1 2> /dev/null | cksum | cut -c\&"1-5\&")
+.Dl fi
+.Dl sleep $(( RANDOM % 1800 ))
+.Dl # actually do something
+.
+.Pp
+.
+With
+.Nm :
+.
+.Dl #!/bin/sh
+.Dl randsleep 1800
+.Dl # actually do something
 .
 .
 .Sh AUTHOR
