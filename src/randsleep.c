@@ -19,7 +19,7 @@ int main (int argc, char **argv) {
 
 	srand(ntime.tv_nsec);
 
-	sleep(rand() % maxsleep);
+	sleep((rand() % maxsleep) + 1);
 
 	if (argc > 2) {
 		execvp(argv[2], argv + 2);
