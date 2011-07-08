@@ -7,8 +7,8 @@ int main (int argc, char **argv) {
 	long maxsleep;
 	struct timespec ntime;
 
-	if (argc <= 2) {
-		fputs("Usage: randsleep <max> <cmd>\n", stdout);
+	if (argc < 2) {
+		fputs("Usage: randsleep <max> [<cmd>]\n", stdout);
 		return 1;
 	}
 
@@ -21,6 +21,10 @@ int main (int argc, char **argv) {
 
 	sleep(rand() % maxsleep);
 
-	execvp(argv[2], argv + 2);
-	perror("execvp");
+	if (argc > 2) {
+		execvp(argv[2], argv + 2);
+		perror("execvp");
+	}
+
+	return 0;
 }

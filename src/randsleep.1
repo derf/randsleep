@@ -12,7 +12,8 @@
 .Sh SYNOPSIS
 .
 .Nm
-.Ar time command args ...
+.Ar time
+.Op Ar command args ...
 .
 .
 .Sh VERSION
@@ -31,6 +32,14 @@ after sleeping for up to
 .Ar time
 seconds.
 It is intended for use in cronjobs and similar.
+.
+.Pp
+.
+If
+.Ar command
+is not specified,
+.Nm
+will simply return after sleeping.
 .
 .
 .Sh RATIONALE
