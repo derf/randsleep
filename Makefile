@@ -8,9 +8,9 @@ install: src/randsleep
 	install -m 644 src/randsleep.1 ${man_dir}/man1
 
 uninstall:
-	rm -f src/randsleep
+	rm -f ${bin_dir}/randsleep ${man_dir}/man1/randsleep.1
 
 clean:
 	rm -f src/randsleep
 
-.PHONY: all install uninstall clean
+.PHONY: install uninstall clean
